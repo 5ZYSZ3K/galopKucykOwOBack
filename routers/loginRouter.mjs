@@ -20,8 +20,10 @@ loginRouter.route("/check").get((req, res) => {
     const { JWT_SECRET } = process.env;
     const token = req.cookies.token;
     if (!token) return res.json(false);
-    jwt.verify(token, JWT_SECRET);
+    else {
+      jwt.verify(token, JWT_SECRET);
     res.json(true);
+    }
   } catch (e) {
     res.send(false);
   }
@@ -83,15 +85,8 @@ loginRouter.route("/create").post((req, res) => {
                   res.send();
                 }
               })
-              .catch((e) => {
-                res.status(500).send(e);
-              });
           })
-          .catch((e) => {
-            res.status(500).send("Failed2!");
-          });
       })
-      .catch(() => res.status(500).send("Failed3!"));
   } catch (e) {
     res.status(500).send("Failed!");
   }
